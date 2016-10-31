@@ -8,35 +8,34 @@
 - TODO：      暂时没有
 - 耗时：      1900ms
 '''
-import sys
 import cx_Oracle
 import datetime
 
 starttime = datetime.datetime.now()
 
-SQL="select t.custno||','||t.certificatetype||','||t.certificateno from ACCT_CUST t where t.invtp='1'"
+SQL = "select t.custno||','||t.certificatetype||','||t.certificateno from ACCT_CUST t where t.invtp='1'"
 
-#connection = cx_Oracle.Connection("kd_sale/1@orcl")
-connection=cx_Oracle.connect('kd_sale','1','192.168.240.117:1521/RACTEST')
+# connection = cx_Oracle.Connection("kd_sale/1@orcl")
+connection = cx_Oracle.connect('kd_sale', '1', '192.168.240.117:1521/RACTEST')
 
 cursor = connection.cursor()
 
-#连接数据库，执行查询
+# 连接数据库，执行查询
 try:
     cursor.execute(SQL)
-    rs=cursor.fetchall()   
+    rs = cursor.fetchall()
 except cx_Oracle.DatabaseError as exc:
     print(exc)
 finally:
     connection.close()
 
-#开始写文件    
+# 开始写文件
 f = open('../output/test-etrading.dat', 'w')
 f.write('custno,certificatetype,certificateno\n')
 for i in rs:
-    f.write(i[0]+'\n')
+    f.write(i[0] + '\n')
 
 f.close()
 endtime = datetime.datetime.now()
-#打印耗时
-print (endtime - starttime)
+# 打印耗时
+print(endtime - starttime)
