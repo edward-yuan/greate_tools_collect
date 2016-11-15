@@ -45,6 +45,7 @@ print(dmp_list)
 subprocess.call('xcopy ' + app_path + ' .\\app' + ' /s /e /y /i', shell=True)
 dmp_list.append('app')
 
+# 开始zip压缩程序
 files = glob.glob('app/*')
 f = zipfile.ZipFile('test.zip', 'w', zipfile.ZIP_DEFLATED)
 
